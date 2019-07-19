@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html>
 <head>
     <meta charset="utf-8">
     <title>店铺入住申请</title>
@@ -11,23 +10,47 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
     <!--验证-->
     <link th:href="@{/css/validationEngine.jquery.css}" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" th:src="@{/js/jquery.validationEngine-zh_CN.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery.validationEngine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.validationEngine-zh_CN.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.validationEngine.js}" charset="utf-8"></script>
+
+    <script>
+
+        // This method is called right before the ajax form validation request
+        // it is typically used to setup some visuals ("Please wait...");
+        // you may return a false to stop the request
+        function beforeCall(form, options){
+            if (console)
+                console.log("Right before the AJAX form validation call");
+            return true;
+        }
+
+        // Called once the server replies to the ajax form validation request
+        function ajaxValidationCallback(status, form, json, options){
+            if (console)
+                console.log(status);
+
+            if (status === true) {
+                alert("the form is valid!");
+                // uncomment these lines to submit the form to form.action
+                // form.validationEngine('detach');
+                // form.submit();
+                // or you may use AJAX again to submit the data
+            }
+        }
+
+        jQuery(document).ready(function(){
+            jQuery("#form_id").validationEngine({
+                ajaxFormValidation: true,
+                onAjaxFormComplete: ajaxValidationCallback,
+                onBeforeAjaxFormValidation: beforeCall
+            });
+        });
+    </script>
 
     <script type="text/javascript">
         function refresh() {
             document.getElementById('captcha_img').src="/kaptcha?"+Math.random();
         }
-    </script>
-    <script type="text/javascript">
-        // 直接调用 
-        $('#form_id').validationEngine();
-
-        // 自定义参数调用 
-        $('#form_id').validationEngine('attach', {
-            promptPosition: 'centerRight',
-            scroll: false
-        });
     </script>
     <style>
         form {
@@ -37,29 +60,29 @@
 </head>
 <body>
 <p class="lead">Xxxx店铺注册系统</p>
-<form class="form-horizontal" id="form_id">
+<form class="form-horizontal" id="form_id" action="/shop" method="post">
     <div class="form-group">
         <label for="inputShopName" class="col-sm-2 control-label">店铺名称</label>
         <div class="col-sm-3">
-            <input type="text" class="validate[required]" id="inputShopName" name="shopName">
+            <input type="text" class="validate[required,minSize[2],ajax[ajaxUserCall]]" id="inputShopName" name="inputShopName">
         </div>
     </div>
     <div class="form-group">
         <label for="inputShopDesc" class="col-sm-2 control-label">店铺描述</label>
         <div class="col-sm-3">
-            <input type="text" class="validate[required,minSize[6]]" id="inputShopDesc" name="shopDesc">
+            <input type="text" class="validate[required,minSize[6],maxSize[30]]" id="inputShopDesc" name="inputShopDesc">
         </div>
     </div>
     <div class="form-group">
         <label for="inputShopAddr" class="col-sm-2 control-label">店铺地址</label>
         <div class="col-sm-3">
-            <input type="text" class="form-control" id="inputShopAddr" name="shopDesc">
+            <input type="text" class="validate[required,minSize[6],maxSize[30],ajax[ajaxNameCall]]" id="inputShopAddr" name="inputShopAddr">
         </div>
     </div>
     <div class="form-group">
         <label for="inputPhone" class="col-sm-2 control-label">联系电话</label>
         <div class="col-sm-3">
-            <input type="text" class="validate[required,custom[phone]]" id="inputPhone" name="phone">
+            <input type="text" class="validate[required,ajax[phone]]" id="inputPhone" name="inputPhone">
         </div>
     </div>
     <div class="form-group">
