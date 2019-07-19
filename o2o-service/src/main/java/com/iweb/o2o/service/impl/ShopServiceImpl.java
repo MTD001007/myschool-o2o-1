@@ -20,18 +20,14 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private ShopMapper shopMapper;
-    @Autowired
-    private AreaMapper areaMapper;
+
     @Override
     public List<Shop> getAllShops() {
         return shopMapper.selectAll();
     }
     @Override
     public List<Shop> getTop5(){return shopMapper.selectTop5();}
-    @Override
-    public Map<String,Integer> getDistribution(){
-        return shopMapper.selectDistribution();
-    }
+
 
 
 }

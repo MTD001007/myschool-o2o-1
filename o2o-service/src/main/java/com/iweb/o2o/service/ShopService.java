@@ -20,8 +20,6 @@ public interface ShopService {
 
     List<Shop> getTop5();
 
-    Map<String,Integer> getDistribution();
-
 
 
 

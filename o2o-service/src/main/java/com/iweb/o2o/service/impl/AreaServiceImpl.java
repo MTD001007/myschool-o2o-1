@@ -25,5 +25,9 @@ public class AreaServiceImpl implements AreaService {
     public List<Area> getAllAreas() {
         return areaMapper.selectAll();
     }
+    @Override
+    public List<Area> getDistribution(){
+        return areaMapper.selectDistribution();
+    }
 
 }

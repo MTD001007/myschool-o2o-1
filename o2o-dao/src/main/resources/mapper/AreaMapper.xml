@@ -8,6 +8,7 @@
         <result column="priority" property="priority" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="last_edit_time" property="lastEditTime" jdbcType="TIMESTAMP" />
+        <result column="count_number" property="countNumber" jdbcType="INTEGER" />
     </resultMap>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_area
@@ -39,4 +40,11 @@
     select area_id, area_name, area_desc, priority, create_time, last_edit_time
     from tb_area
   </select>
+    <select id="selectDistribution" resultMap="BaseResultMap" >
+    SELECT a.area_id,a.area_name,COUNT(*)AS count_number
+    FROM tb_shop s,tb_area a
+    WHERE s.area_id= a.area_id
+    GROUP BY s.area_id
+  </select>
+
 </mapper>

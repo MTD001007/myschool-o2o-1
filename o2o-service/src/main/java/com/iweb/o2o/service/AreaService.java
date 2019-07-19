@@ -19,6 +19,8 @@ public interface AreaService {
      */
     List<Area> getAllAreas();
 
+    List<Area> getDistribution();
+
 
 
 }

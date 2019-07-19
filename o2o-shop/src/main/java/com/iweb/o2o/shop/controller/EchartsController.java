@@ -52,11 +52,12 @@ public class EchartsController {
         return map;
     }
     @GetMapping("/getDistribution")
+    @ResponseBody
     public Map getDistribution(){
-        Map<String,Object> result = new HashMap<>();
-        Map<String,Integer> map = shopService.getDistribution();
-        result.put("distributions",map);
-        return result;
+        Map<String,Object> map = new HashMap<>();
+        List<Area> areas2 = areaService.getDistribution();
+        map.put("areas2",areas2);
+        return map;
     }
 
 }

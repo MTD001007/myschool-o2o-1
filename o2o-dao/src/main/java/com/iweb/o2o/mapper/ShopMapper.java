@@ -19,5 +19,5 @@ public interface ShopMapper {
 
     List<Shop> selectTop5();
 
-    Map<String,Integer> selectDistribution();
+
 }

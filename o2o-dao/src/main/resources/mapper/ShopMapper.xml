@@ -19,10 +19,6 @@
     <result column="enable_status" property="enableStatus" jdbcType="INTEGER" />
     <result column="advice" property="advice" jdbcType="VARCHAR" />
     <association property="area" column="area_id" select="com.iweb.o2o.mapper.AreaMapper.selectByPrimaryKey"/>
-    <!--<association property="area" jdbcType="com.iweb.o2o.entity.Area">-->
-      <!--<id property="areaId" jdbcType="int"/>-->
-      <!--<result property="areaName" jdbcType="area_name"/>-->
-    <!--</association>-->
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_shop
@@ -83,10 +79,5 @@
     order by priority desc
     limit 5
   </select>
-  <select id="selectDistribution" resultType="Map" >
-    SELECT a.area_name,COUNT(*)AS countNumber
-    FROM tb_shop s,tb_area a
-    WHERE s.area_id= a.area_id
-    GROUP BY s.area_id
-  </select>
+
 </mapper>
