@@ -1,7 +1,10 @@
 package com.iweb.o2o.service;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.iweb.o2o.entity.Area;
+import org.springframework.boot.json.JsonParseException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -15,4 +18,7 @@ public interface AreaService {
      * @return
      */
     List<Area> getAllAreas();
+
+
+
 }

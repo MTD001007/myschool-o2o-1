@@ -14,7 +14,7 @@
         $(function () {
             $("#btn").click(function () {
                 //发送Ajax请求
-                $.get("/shop/getData",function (data) {
+                $.get("/shop/getTop5",function (data) {
                     //若Controller直接返回的是Object，data就可以直接遍历
 /*                    $.each(data,function () {
                         alert(this.priority + this.areaName)
@@ -22,10 +22,10 @@
                     //若Controller返回的是Map，data.key就可以直接遍历
                     var xData = new Array();
                     var yData = new Array();
-                    $.each(data.areas,function () {
+                    $.each(data.shops,function () {
                         //alert(this.priority + this.areaName)
                         //向数组中添加数据
-                        xData.push(this.areaName)
+                        xData.push(this.shopName)
                         yData.push(this.priority)
                     })
 
@@ -39,7 +39,7 @@
                         },
                         tooltip: {},
                         legend: {
-                            data:['权重']
+                            data:['权重排名前5']
                         },
                         xAxis: {
                             //js的数组
@@ -47,7 +47,7 @@
                             data: xData
                         },
                         yAxis: {
-                            min: 1
+                            min: 10
                         },
                         series: [{
                             name: '权重',
@@ -62,11 +62,92 @@
                 })
             });
         })
+        $(function () {
+            $("#btn2").click(function () {
+                //发送Ajax请求
+                $.get("/shop/getDistribution",function (data) {
+                    //若Controller直接返回的是Object，data就可以直接遍历
+                    /*                    $.each(data,function () {
+                                            alert(this.priority + this.areaName)
+                                        })*/
+                    //若Controller返回的是Map，data.key就可以直接遍历
+                    var pieData = new Array();
+                    $.each(data.distributions,function () {
+                        //alert(this.priority + this.areaName)
+                        //向数组中添加数据
+                        pieData.push(this);
+                    })
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart = echarts.init(document.getElementById('main'));
+
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title: {
+                            text: 'ECharts 查询后台数据',
+                            x:'center'
+                        },
+                        tooltip: {trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient : 'vertical',
+                            x : 'left',
+                            data:['店家的地区分布']
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {
+                                    show: true,
+                                    type: ['pie', 'funnel'],
+                                    option: {
+                                        funnel: {
+                                            x: '25%',
+                                            width: '50%',
+                                            funnelAlign: 'left',
+                                            max: 1548
+                                        }
+                                    }
+                                },
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,
+                        series : [
+                            {
+                                name:'访问来源',
+                                type:'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:335, name:'直接访问'},
+                                    {value:310, name:'邮件营销'},
+                                    {value:234, name:'联盟广告'},
+                                    {value:135, name:'视频广告'},
+                                    {value:1548, name:'搜索引擎'}
+                                ]
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                })
+            });
+        })
     </script>
 </head>
 <body>
-    <button type="button" class="btn btn-success" id="btn">权重占比</button>
+    <p><button type="button" class="btn btn-success" id="btn">权重占比</button></p>
+    <hr/>
+    <p><button type="button" class="btn btn-success" id="btn2">店家地区分布</button></p>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main" style="width: 600px;height:400px;"></div>
 </body>
 </html>
+
+

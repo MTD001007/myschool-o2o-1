@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.o2o.mapper.ProductCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.iweb.o2o.entity.ProductCategory" >
+    <id column="product_category_id" property="productCategoryId" jdbcType="INTEGER" />
+    <result column="product_category_name" property="productCategoryName" jdbcType="VARCHAR" />
+    <result column="product_category_desc" property="productCategoryDesc" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_edit_time" property="lastEditTime" jdbcType="TIMESTAMP" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_product_category
+    where product_category_id = #{productCategoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iweb.o2o.entity.ProductCategory" >
+    insert into tb_product_category (product_category_id, product_category_name, 
+      product_category_desc, priority, create_time, 
+      last_edit_time, shop_id)
+    values (#{productCategoryId,jdbcType=INTEGER}, #{productCategoryName,jdbcType=VARCHAR}, 
+      #{productCategoryDesc,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastEditTime,jdbcType=TIMESTAMP}, #{shopId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.iweb.o2o.entity.ProductCategory" >
+    update tb_product_category
+    set product_category_name = #{productCategoryName,jdbcType=VARCHAR},
+      product_category_desc = #{productCategoryDesc,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_edit_time = #{lastEditTime,jdbcType=TIMESTAMP},
+      shop_id = #{shopId,jdbcType=INTEGER}
+    where product_category_id = #{productCategoryId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select product_category_id, product_category_name, product_category_desc, priority, 
+    create_time, last_edit_time, shop_id
+    from tb_product_category
+    where product_category_id = #{productCategoryId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select product_category_id, product_category_name, product_category_desc, priority, 
+    create_time, last_edit_time, shop_id
+    from tb_product_category
+  </select>
+</mapper>

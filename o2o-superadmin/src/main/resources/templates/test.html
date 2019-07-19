@@ -11,7 +11,8 @@
 <script>
     $(function () {
         //使用标签选择器选中
-        $("tr:gt(0):odd").css("backgroundColor","red");
+        $("tr:gt(0):odd").css("backgroundColor","Lavender");
+        $("tr:gt(0):even").css("backgroundColor","LightSkyBlue");
 
         //绑定事件几种方式？？？
         $("#btn").click(function () {
@@ -28,7 +29,7 @@
     })
 </script>
 <body>
-    <table class="table">
+    <table class="table table-bordered">
         <tr>
             <th>id</th>
             <th>name</th>

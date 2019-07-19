@@ -1,7 +1,9 @@
 package com.iweb.o2o.shop.controller;
 
 import com.iweb.o2o.entity.Area;
+import com.iweb.o2o.entity.Shop;
 import com.iweb.o2o.service.AreaService;
+import com.iweb.o2o.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,8 @@ public class EchartsController {
 
     @Autowired
     private AreaService areaService;
+    @Autowired
+    private ShopService shopService;
 
     @GetMapping("/echarts")
     public ModelAndView toEcharts() {
@@ -39,4 +43,20 @@ public class EchartsController {
         map.put("areas",areas);
         return map;
     }
+    @GetMapping("/getTop5")
+    @ResponseBody
+    public Map getTop5() {
+        Map<String,Object> map = new HashMap<>();
+        List<Shop> shops = shopService.getTop5();
+        map.put("shops",shops);
+        return map;
+    }
+    @GetMapping("/getDistribution")
+    public Map getDistribution(){
+        Map<String,Object> result = new HashMap<>();
+        Map<String,Integer> map = shopService.getDistribution();
+        result.put("distributions",map);
+        return result;
+    }
+
 }
