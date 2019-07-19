@@ -16,4 +16,9 @@ public class ShopAdminController {
     public String toAdd() {
         return "add.html";
     }
+
+    @GetMapping("/shopmanage.html")
+    public String shopManage() {
+        return "shopmanage.html";
+    }
 }

@@ -28,34 +28,129 @@
                         xData.push(this.shopName)
                         yData.push(this.priority)
                     })
+                    var yMax = 100;
+                    var dataShadow = [];
+                    for (var i = 0; i < yData.length; i++) {
+                        dataShadow.push(yMax);
+                    }
 
                     // 基于准备好的dom，初始化echarts实例
                     var myChart = echarts.init(document.getElementById('main'));
 
                     // 指定图表的配置项和数据
                     var option = {
+                        //backgroundColor: '#eee',
                         title: {
                             text: 'ECharts 查询后台数据'
                         },
-                        tooltip: {},
+                        tooltip: {trigger: 'axis'},
                         legend: {
-                            data:['权重排名前5']
+                            data:['权重排名前5'],
+                            align: 'left',
+                            left: 10
                         },
+                       /* toolbox: {
+                            show : true,
+                            feature : {
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,*/
                         xAxis: {
                             //js的数组
                           //  data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                            data: xData
+                            data: xData,
+                            axisLabel: {
+                                inside: true,
+                                textStyle: {
+                                    color: '#fff'
+                                }
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            z: 10
                         },
                         yAxis: {
-                            min: 10
+                            min: 10,
+                            axisLine: {
+                                show: false
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            axisLabel: {
+                                textStyle: {
+                                    color: '#999'
+                                }
+                            }
                         },
-                        series: [{
+                        dataZoom: [
+                            {
+                                type: 'inside'
+                            }
+                        ],
+                        series: [{ // For shadow
+                            type: 'bar',
+                            itemStyle: {
+                                normal: {color: 'rgba(0,0,0,0.05)'}
+                            },
+                            barGap:'-100%',
+                            barCategoryGap:'40%',
+                            data: dataShadow,
+                            animation: false
+                             },
+                            {
                             name: '权重',
                             type: 'bar',
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1,
+                                            [
+                                                {offset: 0, color: '#83bff6'},
+                                                {offset: 0.5, color: '#188df0'},
+                                                {offset: 1, color: '#188df0'}
+                                            ]
+                                        )
+                                    },
+                                    emphasis: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1,
+                                            [
+                                                {offset: 0, color: '#2378f7'},
+                                                {offset: 0.7, color: '#2378f7'},
+                                                {offset: 1, color: '#83bff6'}
+                                            ]
+                                        )
+                                    }
+                                },
                          //   data: [5, 20, 36, 10, 10, 20]
-                            data: yData
-                        }]
+                            data: yData,
+                            markLine : {
+                                data : [
+                                    {type : 'average', name : '平均值'}
+                                ]
+                        }
+                    }
+                        ]
                     };
+                    // Enable data zoom when user click bar.
+                    var zoomSize = 6;
+                    myChart.on('click', function (params) {
+                        console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+                        myChart.dispatchAction({
+                            type: 'dataZoom',
+                            startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+                            endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+                        });
+                    });
 
                     // 使用刚指定的配置项和数据显示图表。
                     myChart.setOption(option);

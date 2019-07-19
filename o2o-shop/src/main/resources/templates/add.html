@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-<p class="lead">Xxxx店铺注册系统</p>
+<p class="lead" align="center"><mark><strong>Xxxx店铺注册系统</strong></mark></p>
 <form class="form-horizontal" id="form_id" action="/shop" method="post">
     <div class="form-group">
         <label for="inputShopName" class="col-sm-2 control-label">店铺名称</label>
@@ -70,7 +70,7 @@
     <div class="form-group">
         <label for="inputShopDesc" class="col-sm-2 control-label">店铺描述</label>
         <div class="col-sm-3">
-            <input type="text" class="validate[required,minSize[6],maxSize[30]]" id="inputShopDesc" name="inputShopDesc">
+            <textarea class="validate[required,minSize[6],maxSize[30]]" id="inputShopDesc" name="inputShopDesc" rows="3"></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -82,7 +82,7 @@
     <div class="form-group">
         <label for="inputPhone" class="col-sm-2 control-label">联系电话</label>
         <div class="col-sm-3">
-            <input type="text" class="validate[required,ajax[phone]]" id="inputPhone" name="inputPhone">
+            <input type="text" class="validate[required,custom[phone]]" id="inputPhone" name="inputPhone">
         </div>
     </div>
     <div class="form-group">
