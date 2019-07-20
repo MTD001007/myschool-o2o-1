@@ -116,7 +116,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product:${products}" th:class="table-danger">
+                <tr th:each="product:${products.list}" th:class="table-danger">
                     <td th:text="${product.productId}">${product.productId}</td>
                     <td th:text="${product.productName}">${product.productName}</td>
                     <td th:text="${product.priority}">${product.priority}</td>

@@ -1,5 +1,7 @@
 package com.iweb.o2o.shop.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.iweb.o2o.entity.Extra;
 import com.iweb.o2o.entity.Product;
 import com.iweb.o2o.service.AreaService;
@@ -88,15 +90,18 @@ public class ShopAdminController {
         return map;
     }
 
-   /* @GetMapping("/productList")
+    @GetMapping("/productListOld")
     @ResponseBody
     public ModelAndView getAllProductsInShop(){
-        ModelAndView mv = new ModelAndView();
+        PageHelper.offsetPage(0,5);
+
         List<Product> products = shopService.getAllProductInShop(20L);
-        mv.addObject("products",products);
-        mv.setViewName("productList.html");
+        PageInfo<Product> pageInfo = new PageInfo<>(products);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("products",pageInfo);
+        mv.setViewName("productListOld.html");
         return mv;
-    }*/
+    }
 
     @GetMapping("/shopmanage.html")
     public String shopManage() {
