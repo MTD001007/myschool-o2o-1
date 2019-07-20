@@ -55,10 +55,36 @@
     from tb_product
     where product_id = #{productId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
+  <select id="selectAll" resultMap="BaseResultMap">
     select product_id, product_name, product_desc, img_addr, normal_price, promotion_price, 
     priority, create_time, last_edit_time, enable_status, point, product_category_id, 
     shop_id
     from tb_product
+  </select>
+  <select id="selectTop5" resultMap="BaseResultMap">
+  SELECT product_id,product_name,normal_price
+  FROM tb_product
+  WHERE product_category_id=#{productCategoryId} AND shop_id=#{shopId}
+  ORDER BY normal_price
+  LIMIT 0,5
+  </select>
+  <select id="selectProductByShopId" resultMap="BaseResultMap">
+    SELECT product_id,product_name,priority,enable_status
+  FROM tb_product
+  WHERE shop_id=#{shopId}
+  ORDER BY priority DESC
+  </select>
+  <select id="selectCountInGivenTime">
+  SELECT t.d as dayForUse,COUNT(*) as countNumber
+      FROM
+      (
+      SELECT product_id,product_name,create_time,DATE_FORMAT(create_time,'%d') d
+      FROM `tb_product`
+      WHERE DATE_FORMAT(create_time,'%y')=17 AND shop_id=20;
+      ) t
+      GROUP BY t.d
+  </select>
+  <select id="getProducts" parameterType="product" resultType="product">
+      SELECT * FROM tb_product
   </select>
 </mapper>

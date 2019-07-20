@@ -22,6 +22,7 @@ public class Product{
   private List<ProductImg> productImgList;
   private ProductCategory productCategory;
   private Shop shop;
+  private Integer dayForUse;
 
 }
  

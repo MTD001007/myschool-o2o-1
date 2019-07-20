@@ -1,5 +1,7 @@
 package com.iweb.o2o.service;
 
+import com.iweb.o2o.entity.Extra;
+import com.iweb.o2o.entity.Product;
 import com.iweb.o2o.entity.Shop;
 
 import java.util.HashMap;
@@ -20,7 +22,11 @@ public interface ShopService {
 
     List<Shop> getTop5();
 
+    List<Product> getTop5Product(Long productCategoryId, Long shopId);
 
+    List<Product> getAllProductInShop( Long shopId);
+
+    List<Extra> getCountInGivenTime(Long shopId);
 
 
 
