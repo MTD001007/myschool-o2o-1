@@ -41,7 +41,7 @@
                     var option = {
                         //backgroundColor: '#eee',
                         title: {
-                            text: '本地商品价格排序'
+                            text: '本店商品价格排序'
                         },
                         tooltip: {trigger: 'axis'},
                         legend: {
@@ -135,6 +135,96 @@
                 })
             });
         })
+        $(function () {
+            $("#btn").click(function () {
+                //发送Ajax请求
+                $.get("/shop/countInTimePeriod",function (data) {
+                    //若Controller直接返回的是Object，data就可以直接遍历
+                    /*                    $.each(data,function () {
+                                            alert(this.priority + this.areaName)
+                                        })*/
+                    //若Controller返回的是Map，data.key就可以直接遍历
+                    var xData = new Array();
+                    var yData = new Array();
+                    $.each(data.extras,function () {
+                        //alert(this.priority + this.areaName)
+                        //向数组中添加数据
+                        xData.push(this.dayForUse)
+                        yData.push(this.countNumber)
+                    })
+                    /*var yMax = 16;
+                    var dataShadow = [];
+                    for (var i = 0; i < yData.length; i++) {
+                        dataShadow.push(yMax);
+                    }*/
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart = echarts.init(document.getElementById('main2'));
+
+                    // 指定图表的配置项和数据
+                     var option = {
+                        title : {
+                            text: '不同时间的商品发布数量'
+                        },
+                        tooltip : {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['2017年6月的商品发布数量']
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                axisLabel : {
+                                    formatter: '{value} 日'
+                                },
+                                data : xData
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLabel : {
+                                    formatter: '{value} 件商品'
+                                }
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'商品数量',
+                                type:'line',
+                                data:yData,
+                                markPoint : {
+                                    data : [
+                                        {type : 'max', name: '最大值'},
+                                        {type : 'min', name: '最小值'}
+                                    ]
+                                },
+                                markLine : {
+                                    data : [
+                                        {type : 'average', name: '平均值'}
+                                    ]
+                                }
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                })
+            });
+        })
     </script>
 </head>
 <body>
@@ -142,6 +232,9 @@
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main" style="width: 600px;height:400px;"></div>
     <hr/>
+    <p><button type="button" class="btn btn-success" id="btn2">给定时间发布的商品数量</button></p>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main2" style="width: 600px;height:400px;"></div>
 </body>
 </html>
 

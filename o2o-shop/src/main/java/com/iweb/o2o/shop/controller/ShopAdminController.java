@@ -1,5 +1,6 @@
 package com.iweb.o2o.shop.controller;
 
+import com.iweb.o2o.entity.Extra;
 import com.iweb.o2o.entity.Product;
 import com.iweb.o2o.service.AreaService;
 import com.iweb.o2o.service.ShopCategoryService;
@@ -46,13 +47,13 @@ public class ShopAdminController {
     public  Object getCategories(@RequestParam(required = false,name = "parentId") Long parentId){
         return shopCategoryService.getCategories(parentId);
     }
+
     @GetMapping("/statistics")
     public ModelAndView toStatistics() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("statistics.html");
         return mv;
     }
-
     @GetMapping("/getTop5Product")
     @ResponseBody
     public Map getTop5Product(/*Long productCategoryId, Long shopId*/){
@@ -61,8 +62,33 @@ public class ShopAdminController {
         map.put("products",products);
         return map;
     }
+    @GetMapping("/countInTimePeriod")
+    @ResponseBody
+    public Map counttTimePeriod(){
+        Map<String,Object> map = new HashMap<>();
+        List<Extra> extras = shopService.getCountInGivenTime(20L);
+        map.put("extras",extras);
+        return map;
+    }
 
-    @GetMapping("/productList")
+    @GetMapping("/productList.html")
+    public ModelAndView getProductList() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("productList.html");
+        return mv;
+    }
+    @GetMapping("/productList.json")
+    @ResponseBody
+    public Object getProducts() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("msg","ok");
+        map.put("count",shopService.getAllProductInShop(20L).size());
+        map.put("data",shopService.getAllProductInShop(20L));
+        return map;
+    }
+
+   /* @GetMapping("/productList")
     @ResponseBody
     public ModelAndView getAllProductsInShop(){
         ModelAndView mv = new ModelAndView();
@@ -70,7 +96,7 @@ public class ShopAdminController {
         mv.addObject("products",products);
         mv.setViewName("productList.html");
         return mv;
-    }
+    }*/
 
     @GetMapping("/shopmanage.html")
     public String shopManage() {

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Extra {
-    private Integer dayForuse;
+    private Integer dayForUse;
     private Integer countNumber;
 
 }

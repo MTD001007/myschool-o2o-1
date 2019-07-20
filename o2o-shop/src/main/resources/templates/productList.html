@@ -2,166 +2,122 @@
 <html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-    <script type="text/javascript" th:src="@{/js/jquery-3.1.0.js}"></script>
-    <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link th:href="@{/css/layui.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css" />
-    <!--<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />-->
     <link th:href="@{/css/bootstrap-grid.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/css/bootstrap-reboot.min.css}" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" th:src="@{/js/jquery-3.1.0.js}"></script>
+    <script type="text/javascript" th:src="@{/js/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header">
-                <h1>
-                    校园O2O平台
-                </h1>
-            </div>
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Messages</a>
-                </li>
-                <li class="nav-item dropdown ml-md-auto">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider">
-                        </div> <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
-                </li>
-            </ul>
-            <h3 class="text-center text-primary">
-                本店商品清单
-            </h3>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="navbar-toggler-icon"></span>
-                </button> <a class="navbar-brand" href="#">Brand</a>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Link <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider">
-                                </div> <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="text" />
-                        <button class="btn btn-primary my-2 my-sm-0" type="submit">
-                            Search
-                        </button>
-                    </form>
-                    <ul class="navbar-nav ml-md-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Link <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider">
-                                </div> <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <button type="button" class="btn btn-success">
-                添加新商品
-            </button>
-            <table class="table table-hover table-bordered">
-                <thead>
-                <tr>
-                    <th>
-                       ProductId
-                    </th>
-                    <th>
-                        Product
-                    </th>
-                    <th>
-                        Priority
-                    </th>
-                    <th>
-                        Enable-Status
-                    </th>
-                    <th colspan="2">
-                        Operation
-                    </th>
-                    <th colspan="2">
-                        Further Operation
-                    </th>
-
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="product:${products}" th:class="table-danger">
-                    <td th:text="${product.productId}">${product.productId}</td>
-                    <td th:text="${product.productName}">${product.productName}</td>
-                    <td th:text="${product.priority}">${product.priority}</td>
-                    <td th:text="${product.enableStatus}">${product.enableStatus}</td>
-                    <td><input type="submit" th:value="上架"></td>
-                    <td><input type="submit" th:value="下架"></td>
-                    <td><input type="submit" th:value="修改"></td>
-                    <td><input type="submit" th:value="删除"></td>
-                </tr>
-                <!--<tr class="table-active">
-                <tr class="table-success">
-                <tr class="table-warning">
-                <tr class="table-danger">
-                </tr>-->
-                </tbody>
-            </table>
-            <nav>
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#">Previous</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+<div class="col-md-12">
+    <div class="page-header">
+        <h1>
+            校园O2O平台
+        </h1>
     </div>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">回到主页</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">修改店铺信息</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/shop/statistics">统计模块</a>
+        </li>
+    </ul>
+    <h3 class="text-center text-primary">
+        本店商品清单
+    </h3>
 </div>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#test'
+            ,url:'/shop/productList.json'
+            ,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field:'productId', title:'商品ID', width:80, fixed: 'left', unresize: true, sort: true}
+                    ,{field:'productName', title:'商品名', width:120, edit: 'text'}
+                    ,{field:'productDesc', title:'商品描述', width:150, edit: 'text'}
+                    ,{field:'normalPrice', title:'正常价格', width:80, edit: 'text', sort: true}
+                    ,{field:'promotionPrice', title:'优惠价格', width:100}
+                    ,{field:'priority', title:'权重'}
+                    ,{field:'createTime', title:'创建时间', width:80, sort: true}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                ]
+            ]
+            ,page: true
+        });
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+            };
+        });
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
-
-
