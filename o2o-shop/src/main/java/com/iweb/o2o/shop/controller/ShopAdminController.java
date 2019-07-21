@@ -74,8 +74,13 @@ public class ShopAdminController {
     }
 
     @GetMapping("/productList.html")
-    public ModelAndView getProductList() {
+    public ModelAndView getProductList(@RequestParam("page")Integer page,
+                                       @RequestParam("limit")Integer limit) {
+        PageHelper.offsetPage(page,limit);
+        List<Product> products = shopService.getAllProductInShop(20L);
+        PageInfo<Product> pageInfo = new PageInfo<>(products);
         ModelAndView mv = new ModelAndView();
+        mv.addObject("products",pageInfo);
         mv.setViewName("productList.html");
         return mv;
     }
