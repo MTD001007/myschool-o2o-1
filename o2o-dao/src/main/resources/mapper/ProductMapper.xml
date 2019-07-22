@@ -85,6 +85,12 @@
   WHERE shop_id=#{shopId}
   ORDER BY priority DESC
   </select>
+  <select id="selectAllProductsByShopId" resultMap="BaseResultMap">
+    SELECT *
+  FROM tb_product
+  WHERE shop_id=#{shopId}
+  ORDER BY priority DESC
+  </select>
   <select id="getProducts" parameterType="product" resultType="product">
       SELECT * FROM tb_product
   </select>

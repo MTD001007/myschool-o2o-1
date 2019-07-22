@@ -1,6 +1,7 @@
 package com.iweb.o2o.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
 import com.iweb.o2o.entity.Extra;
 import com.iweb.o2o.entity.Product;
 import com.iweb.o2o.entity.Shop;
@@ -38,8 +39,13 @@ public class ShopServiceImpl implements ShopService {
         return productMapper.selectTop5(productCategoryId,shopId);
     }
     @Override
-    public List<Product> getAllProductInShop( Long shopId){
-        return productMapper.selectProductByShopId(shopId);
+    public List<Product> getAllProductsInShop(Long shopId){
+        return productMapper.selectAllProductsByShopId(shopId);
+    }
+    @Override
+    public List<Product> getProductInShop( Long shopId,int page, int limit){
+        //也可以在这里调pageHelper,写方法，或者封装pageBean。
+        return productMapper.selectProductByShopId(shopId,page,limit);
     }
     @Override
     public List<Extra> getCountInGivenTime(Long shopId){

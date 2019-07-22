@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!--<link rel="stylesheet" href="//res.layui.com/layui/dist/css/layui.css?t=1560414887305" media="all">-->
-    <link th:href="@{/css/layui.css}" rel="stylesheet" type="text/css" /> <!--media="all"-->
+    <link th:href="@{/css/layui.css}" rel="stylesheet" type="text/css" media="all"/> <!--media="all"-->
     <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/css/bootstrap-grid.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/css/bootstrap-reboot.min.css}" rel="stylesheet" type="text/css" />
@@ -60,13 +60,13 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
-<div class="layui-tab-content">
+<!--<div class="layui-tab-content">
     <div class="layui-tab-item layui-show">
         <div class="layui-tab-item">
             <div id="pageDemo"></div>
         </div>
     </div>
-</div>
+</div>-->
 <!--<script src="//res.layui.com/layui/dist/layui.js?t=1560414887305"></script>-->
 <script>
    /* layui.config({
@@ -84,7 +84,15 @@
             // ,slider = layui.slider //滑块
 
         //向世界问个好
-        // layer.msg('Hello World');
+        // layer.open({
+        //     type: 1,
+        //     content: '传入任意的文本或html' //这里content是一个普通的String
+        // });
+        layer.open({
+               type: 1,
+                content:  $('#barDemo') //这里content是一个普通的String
+            });
+        layer.msg('Hello World');
 
         //监听Tab切换
         element.on('tab(demo)', function(data){
@@ -100,7 +108,13 @@
             ,url:'/shop/productList.json'
             ,toolbar: '#toolbarDemo'
             ,title: '用户数据表'
-            ,page: true //开启分页
+            ,page:  true//开启分页
+            ,request: {
+                    pageName: 'page', //页码的参数名称，默认：page
+                    limitName: 'limit' //每页数据量的参数名，默认：limit
+            }
+            ,limit: 5
+            ,limits: [5,10,15,20]
             // ,totalRow: true //开启合计行
             ,cols: [
                 [
@@ -135,14 +149,17 @@
         });
         //监听行工具事件
         table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-            var data = obj.data;
+            var data = obj.data,
+                layEvent = obj.event; //获得 lay-event 对应的值
             //console.log(obj)
-            if(obj.event === 'del'){
+            if(layEvent === 'detail'){
+                layer.msg('查看操作');
+            }else if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构
                     layer.close(index);
                 });
-            } else if(obj.event === 'edit'){
+            } else if(layEvent === 'edit'){
                 layer.prompt({
                     formType: 2
                     ,value: data.email
@@ -155,7 +172,7 @@
             }
         });
         //分页
-        laypage.render({
+        /*laypage.render({
             elem: 'pageDemo' //分页容器的id
             ,count: 10 //总页数
             ,skin: '#1E9FFF' //自定义选中色值
@@ -165,8 +182,8 @@
                     layer.msg('第'+ obj.curr +'页', {offset: 'b'});
                 }
             }
-        });
-        //底部信息
+        });*/
+        // 底部信息
         // var footerTpl = lay('#footer')[0].innerHTML;
         // lay('#footer').html(layui.laytpl(footerTpl).render({}))
         //     .removeClass('layui-hide');

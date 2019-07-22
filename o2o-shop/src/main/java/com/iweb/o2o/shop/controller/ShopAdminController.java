@@ -74,28 +74,29 @@ public class ShopAdminController {
     }
 
     @GetMapping("/productList.html")
-    public ModelAndView getProductList(@RequestParam("page")Integer page,
-                                       @RequestParam("limit")Integer limit) {
-        PageHelper.offsetPage(page,limit);
-        List<Product> products = shopService.getAllProductInShop(20L);
-        PageInfo<Product> pageInfo = new PageInfo<>(products);
+    public ModelAndView getProductList() {
         ModelAndView mv = new ModelAndView();
-        mv.addObject("products",pageInfo);
         mv.setViewName("productList.html");
         return mv;
     }
     @GetMapping("/productList.json")
     @ResponseBody
-    public Object getProducts() {
+    public Object getProducts(@RequestParam("page")int page,
+                              @RequestParam("limit")int limit) {
+//        System.out.println("page:"+page+"limit:"+limit);
         Map<String,Object> map = new HashMap<>();
         map.put("code",0);
         map.put("msg","ok");
-        map.put("count",shopService.getAllProductInShop(20L).size());
-        map.put("data",shopService.getAllProductInShop(20L));
+        map.put("count",shopService.getAllProductsInShop(20L).size());
+        map.put("data",shopService.getProductInShop(20L,page,limit));
+//        PageHelper.offsetPage(page,limit);
+//        List<Product> products = shopService.getAllProductInShop(20L);
+//        PageInfo<Product> pageInfo = new PageInfo<>(products);
+//        map.put("data",pageInfo);
         return map;
     }
 
-    @GetMapping("/productListOld")
+/*    @GetMapping("/productListOld")
     @ResponseBody
     public ModelAndView getAllProductsInShop(){
         PageHelper.offsetPage(0,5);
@@ -106,7 +107,7 @@ public class ShopAdminController {
         mv.addObject("products",pageInfo);
         mv.setViewName("productListOld.html");
         return mv;
-    }
+    }*/
 
     @GetMapping("/shopmanage.html")
     public String shopManage() {

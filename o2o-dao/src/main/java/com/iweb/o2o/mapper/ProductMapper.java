@@ -19,7 +19,8 @@ public interface ProductMapper {
 
     List<Product> selectTop5(@Param("productCategoryId") Long productCategoryId,@Param("shopId") Long shopId);
 
-    List<Product> selectProductByShopId(@Param("shopId") Long shopId);
+    List<Product> selectAllProductsByShopId(@Param("shopId") Long shopId);
+    List<Product> selectProductByShopId(@Param("shopId") Long shopId,@Param("page") int pageNum,@Param("limit") int pageSize);
 
     List<Extra> selectCountInGivenTime(@Param("shopId") Long shopId);
 

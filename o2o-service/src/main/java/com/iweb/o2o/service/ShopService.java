@@ -24,7 +24,8 @@ public interface ShopService {
 
     List<Product> getTop5Product(Long productCategoryId, Long shopId);
 
-    List<Product> getAllProductInShop( Long shopId);
+    List<Product> getAllProductsInShop( Long shopId);
+    List<Product> getProductInShop( Long shopId, int page, int limit);
 
     List<Extra> getCountInGivenTime(Long shopId);
 
